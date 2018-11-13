@@ -1,0 +1,136 @@
+\documentclass[tikz,border=5pt,multi]{standalone}
+\usepackage{forest,array}
+\usetikzlibrary{shadows}
+\newcolumntype{C}[1]{>{\centering}p{#1}}
+%\newcolumntype{C}[1]{>{\centering}m{#1}}
+\begin{document}
+
+\forestset{
+  skip one/.style={
+    replace by={
+      [,
+        shape=coordinate,
+        l*=.25,
+        append
+      ]
+    },
+  },
+  state/.style={
+    content={Customer},
+    draw=red,
+    inner color=red!10,
+    outer color=red!20,
+    for descendants={
+      draw=red,
+      inner color=red!10,
+      outer color=red!20,
+    },
+    before drawing tree={
+      for descendants={
+        edge={draw=red}
+      },
+    }
+  },
+}
+
+\begin{forest}
+for tree={
+  if level=0{align=center}{% allow multi-line text and set alignment
+    align={@{}C{25mm}@{}},
+  },
+  if level=5{align=center}{% allow multi-line text and set alignment
+    align={@{}C{45mm}@{}},
+  },
+  draw,
+  font=\sffamily\bfseries,
+  edge path={
+    \noexpand\path [draw, \forestoption{edge}] (!u.parent anchor) -- +(0,-5mm) -| (.child anchor)\forestoption{edge label};
+  },
+  parent anchor=south,
+  child anchor=north,
+  l sep=10mm,
+  tier/.wrap pgfmath arg={tier #1}{level()},
+  edge={ultra thick, rounded corners=2pt},
+  ultra thick,
+  inner color=gray!5,
+  outer color=gray!20,
+  rounded corners=2pt,
+  drop shadow,
+}
+[0
+  [00]
+  [01]
+  [02
+    [020]
+    [021
+      [0210]
+      [0211
+          [02111]
+          [02111]
+          [02111]
+          [02111
+            [Agents\\
+                \begin{tabular}{|c|c|c|}
+                    \hline
+                    ID & HH & WP \\
+                    \hline
+                    \hline
+                    00 & 00 & 01 \\
+                    01 & 00 & 03 \\
+                    02 & 01 & 03 \\
+                    03 & 02 & 04 \\
+                    04 & 02 & 02 \\
+                    05 & 02 & 01 \\
+                    06 & 02 & 01 \\
+                    \hline
+                \end{tabular}
+            ]
+            [Households\\
+                \begin{tabular}{|c|c|c|c|c|}
+                    \hline
+                    ID & size & type & lon & lat \\
+                    \hline
+                    \hline
+                    00 & 2 & 1 & 2.2 & 3.4 \\
+                    01 & 1 & 0 & 2.2 & 3.4 \\
+                    02 & 1 & 0 & 2.2 & 3.5 \\
+                    03 & 2 & 2 & 2.3 & 3.5 \\
+                    04 & 3 & 2 & 2.3 & 3.6 \\
+                    05 & 5 & 2 & 2.3 & 3.7 \\
+                    06 & 2 & 1 & 2.4 & 3.7 \\
+                    \hline
+                \end{tabular}
+            ]
+            [Workplaces\\
+                \begin{tabular}{|c|c|c|c|c|}
+                    \hline
+                    ID & size & type & lon & lat \\
+                    \hline
+                    \hline
+                    00 &  8 & 1 & 2.2 & 3.4 \\
+                    01 & 12 & 0 & 2.2 & 3.4 \\
+                    02 & 11 & 0 & 2.2 & 3.5 \\
+                    03 & 20 & 2 & 2.3 & 3.5 \\
+                    04 & 13 & 2 & 2.3 & 3.6 \\
+                    05 &  5 & 2 & 2.3 & 3.7 \\
+                    06 & 12 & 1 & 2.4 & 3.7 \\
+                    \hline
+                \end{tabular}
+            ]
+          ]
+          [\ldots]
+          [02119]
+      ]
+      [\ldots]
+      [0217]
+    ]
+    [022]
+    [\ldots]
+    [028]
+  ]
+  [\ldots]
+  [05]
+]
+\end{forest}
+
+\end{document}
